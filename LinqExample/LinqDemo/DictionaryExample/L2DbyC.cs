@@ -15,7 +15,7 @@ namespace LinqExample.LinqDemo.DictionaryExample
             {
                 new PersonE { Name = "Alice", Age = 30, City = "Auckland" },
                 new PersonE { Name = "Bob", Age = 20, City = "Wellington" },
-                new PersonE { Name = "Alice1", Age = 30, City = "Christchurch" } // Duplicate key if fields are only Name + Age
+                new PersonE { Name = "Alice", Age = 30, City = "Christchurch" } // Duplicate key if fields are only Name + Age
             };
 
             var dict = people.ToDictionaryByFields("Name", "Age");

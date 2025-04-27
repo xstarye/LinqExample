@@ -19,10 +19,20 @@ namespace LinqExample.LinqDemo.DictionaryExample
             if (properties.Any(p => p == null))
                 throw new ArgumentException("One or more fields do not exist on the type.");
 
+            //如果重复了，调用下面这一段就会报错
+            /*
             return list.ToDictionary(
                 item => string.Join("|", properties.Select(p => p.GetValue(item)?.ToString() ?? "")),
                 item => item
             );
+            */
+            var dict = new Dictionary<string, T>();
+            foreach (var item in list)
+            {
+                var key = string.Join("|", properties.Select(p => p.GetValue(item)?.ToString() ?? ""));
+                dict.TryAdd(key, item); // 如果 key 已存在，忽略
+            }
+            return dict;
         }
 
         public static Dictionary<string, List<T>> ToDictionaryByFieldsAllowDup<T>(this IEnumerable<T> list, params string[] fields)
